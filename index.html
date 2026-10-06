@@ -272,6 +272,18 @@ footer {
   main { padding:0 12px 40px; }
   header { padding:14px 12px; }
 }
+
+.company-summary { max-width: 760px; margin: 8px auto 30px; font-size: 14px; }
+.company-summary h2 { text-align: center; font-size: 16px; margin: 0 0 16px; }
+.summary-list { width: fit-content; max-width: 100%; margin: 0 auto; padding: 0; list-style: none; }
+.summary-list li { display: grid; grid-template-columns: 24px 1fr; gap: 8px; margin: 8px 0; }
+.source-note { text-align: center; color: var(--muted); font-size: 11px; margin-top: 16px; }
+a { color: var(--accent); overflow-wrap: anywhere; }
+.final-recap { max-width: 860px; margin: 32px auto 0; font-size: 14px; }
+.final-recap h2 { font-size: 16px; }
+.recap-intro { color: var(--muted); }
+.recap-list { padding-left: 20px; }
+.recap-list li { padding-left: 4px; margin: 14px 0; }
 </style>
 </head>
 
@@ -307,6 +319,26 @@ footer {
 </header>
 
 <main>
+
+<section class="company-summary" aria-labelledby="company-summary-title">
+<h2 id="company-summary-title">Накратко за AMPECO:</h2>
+<ul class="summary-list">
+<li><span aria-hidden="true">📅</span><span>основана през 2018 г.</span></li>
+<li><span aria-hidden="true">💻</span><span>независима софтуерна компания</span></li>
+<li><span aria-hidden="true">⚡</span><span>разработва платформа за управление на зареждането на електромобили</span></li>
+<li><span aria-hidden="true">🏷️</span><span>може да се предлага под собствената марка на клиента (white-label)</span></li>
+<li><span aria-hidden="true">🤝</span><span>обслужва CPO, eMSP, автопаркове, енергийни компании, автомобилни производители и др.</span></li>
+<li><span aria-hidden="true">🎯</span><span>компанията се фокусира върху софтуера</span></li>
+<li><span aria-hidden="true">🔌</span><span>не притежава зарядни станции</span></li>
+<li><span aria-hidden="true">💡</span><span>не продава електроенергия</span></li>
+<li><span aria-hidden="true">🌐</span><span>не управлява собствена зарядна мрежа</span></li>
+<li><span aria-hidden="true">📊</span><span>управлява над 300 000 зарядни точки</span></li>
+<li><span aria-hidden="true">🌍</span><span>над 70 пазара</span></li>
+<li><span aria-hidden="true">🔗</span><span>поддържа отворени стандарти като OCPP и OCPI</span></li>
+<li><span aria-hidden="true">🛠️</span><span>обхваща конфигуриране на инфраструктурата, тарифи, роуминг, таксуване и анализи</span></li>
+</ul>
+<p class="source-note">Източник: <a href="https://www.ampeco.com/about/" target="_blank" rel="noopener noreferrer">AMPECO — About us</a> • Данни от 6 октомври 2026 г.</p>
+</section>
 
 <div class="top-grid">
 
@@ -346,10 +378,7 @@ data-search="за компанията основана 2018 white label about a
 </summary>
 <div class="card-body">
 
-<p><strong>Накратко за AMPECO:</strong> Основана през 2018 г., AMPECO е независима софтуерна компания, която разработва платформа за управление на зареждането на електромобили. Платформата може да се предлага под собствената марка на клиента (white-label) и обслужва CPO, eMSP, автопаркове, енергийни компании, автомобилни производители и собственици на обекти.</p>
-<p>Компанията се фокусира върху софтуера: не притежава зарядни станции, не продава електроенергия и не управлява собствена зарядна мрежа. Целта е клиентите да запазят контрол върху своя бизнес, марка и отношения с водачите.</p>
-<p>Според официалната страница „About“, платформата управлява над <strong>300 000 зарядни точки в над 70 пазара</strong>. Поддържа отворени стандарти като OCPP и OCPI и обхваща конфигуриране на инфраструктурата, тарифи, роуминг, таксуване и анализи.</p>
-<p style="font-size:12px;color:var(--muted)">Източник: <a href="https://www.ampeco.com/about/" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">AMPECO — About us</a> • Проверено на 6 октомври 2026 г. Посочените мащаби са публикувани от компанията.</p>
+<p>AMPECO предоставя софтуерния слой за управление на зарядната инфраструктура и бизнеса около зареждането на електромобили.</p>
 
 <p>Може да управлява:</p>
 
@@ -854,6 +883,19 @@ data-search="difference cpo emsp interview Q: CPO vs eMSP? Infrastructure operat
 
 
 </div>
+
+<section class="panel final-recap" aria-labelledby="recap-title">
+<h2 id="recap-title">Петте неща, които трябва да останат в главата ти</h2>
+<p class="recap-intro">Дори да те събудят в 3 сутринта:</p>
+<ul class="recap-list">
+<li><strong>AMPECO</strong> → софтуерна платформа за управление на бизнеса със зареждане на електромобили.</li>
+<li><strong>OCPP</strong> → <strong>зарядна станция ↔ AMPECO/бекенд.</strong> <a href="https://openchargealliance.org/protocols/open-charge-point-protocol/" target="_blank" rel="noopener noreferrer">Open Charge Alliance</a></li>
+<li><strong>MeterValues</strong> → измервания от зарядната станция: енергия, мощност, ток, напрежение и др. <a href="https://app.unpkg.com/%40ampeco/ocpp-eliftech%401.0.3/files/ocpp-1.6-schemas/MeterValues.json" target="_blank" rel="noopener noreferrer">UNPKG — схема на MeterValues</a></li>
+<li><strong>OCPI</strong> → <strong>бекенд/доставчик на зарядни услуги ↔ друг доставчик/бекенд</strong>, особено при роуминг. <a href="https://evroaming.org/ocpi/" target="_blank" rel="noopener noreferrer">EVRoaming Foundation</a></li>
+<li><strong>CPO и eMSP</strong> → <strong>CPO управлява зарядните станции; eMSP обслужва водачите.</strong> <a href="https://developers.ampeco.com/docs/overview" target="_blank" rel="noopener noreferrer">AMPECO EV Charging Platform</a></li>
+</ul>
+<p>Това е основата. Когато тези пет неща станат интуитивни, можем да навлезем <strong>едно ниво по-дълбоко в диагностиката на OCPP</strong> — според мен най-полезната следваща стъпка за интервюто за инженер техническа поддръжка.</p>
+</section>
 
 </main>
 
