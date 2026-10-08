@@ -1,1012 +1,216 @@
-<!DOCTYPE html>
-<html lang="bg">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AMPECO — технически справочник</title>
-
+<!doctype html><html lang="bg"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AMPECO Cheat Sheet</title>
 <style>
-:root {
-  --bg: #0d1117;
-  --panel: #161b22;
-  --panel2: #1c2128;
-  --border: #30363d;
-  --text: #e6edf3;
-  --muted: #8b949e;
-  --accent: #2f81f7;
-  --green: #3fb950;
-  --yellow: #d29922;
-  --red: #f85149;
-  --purple: #a371f7;
-}
+:root{--bg:#f5f7fa;--card:#fff;--text:#17202a;--muted:#667085;--line:#e5e7eb;--accent:#246bfd;--soft:#eef4ff}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
+header{position:sticky;top:0;z-index:5;background:#fffffff2;backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.wrap{max-width:1100px;margin:auto;padding:18px}h1{margin:0;font-size:25px}.sub{color:var(--muted);margin-top:4px}
+.controls{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}input{flex:1;min-width:240px;padding:11px 13px;border:1px solid var(--line);border-radius:10px;font-size:15px}
+button{border:1px solid var(--line);background:white;border-radius:10px;padding:10px 12px;cursor:pointer}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:14px;padding:18px 0 30px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:17px;box-shadow:0 2px 8px #00000009}.card h2{font-size:17px;margin:0 0 10px}
+.card ul{margin:0;padding-left:20px}.card li{margin:6px 0;line-height:1.42}.hero{grid-column:1/-1;background:var(--soft);border-color:#d8e5ff}
+.big{font-size:18px;font-weight:700;line-height:1.45}code{display:block;background:#111827;color:#f9fafb;padding:10px;border-radius:9px;margin:8px 0;white-space:normal}
+.tag{display:inline-block;padding:4px 8px;background:#f2f4f7;border-radius:999px;margin:3px;font-size:13px}.hidden{display:none}
+.nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.nav a{display:inline-block;border:1px solid var(--line);background:white;border-radius:10px;padding:10px 12px;cursor:pointer;text-decoration:none;color:var(--text)}
+.nav a:hover{background:var(--soft);border-color:#c8d9ff}
+.page{display:block;scroll-margin-top:150px}
+.table-wrap{overflow-x:auto}.mini-table{width:100%;border-collapse:collapse;font-size:14px}
+.mini-table th,.mini-table td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.mini-table th{background:#f8fafc}
+.flow{font-weight:700;text-align:center;background:#111827;color:#fff;padding:12px;border-radius:10px;line-height:1.6}
+.note{border-left:4px solid var(--accent);padding:10px 12px;background:#f8fbff;border-radius:8px;line-height:1.5}
+.kicker{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700;margin-bottom:6px}
+.footer{text-align:center;color:var(--muted);font-size:12px;padding-bottom:24px}
+@media(max-width:600px){.wrap{padding:13px}.grid{grid-template-columns:1fr}h1{font-size:21px}}
+</style></head><body>
+<header><div class="wrap"><h1>⚡ AMPECO — Cheat Sheet</h1><div class="sub">Бърза справка за компанията, платформата и EV charging терминологията</div>
+<div class="controls"><input id="q" placeholder="Търси: OCPP, OCPI, CPO, MeterValues, charging..."><button onclick="clearSearch()">Изчисти</button></div>
+<div class="nav"><a href="#company">AMPECO</a><a href="#ocpp">OCPP Handbook</a><a href="#glossary">📚 Glossary</a></div></div></header>
+<main class="wrap"><section id="company" class="page"><div class="grid">
+<section class="card hero"><h2>🧩 AMPECO в едно изречение</h2><div class="big">AMPECO е българска глобална софтуерна компания, която разработва white-label, hardware-agnostic платформа за управление на EV charging инфраструктура и бизнес, базирана на отворени стандарти като OCPP и OCPI.</div></section>
+<section class="card"><h2>🏢 Основна информация</h2><ul><li><b>Основана:</b> 2018 г.</li><li><b>Централа:</b> София, България</li><li><b>Служители:</b> 200+</li><li><b>Клиенти:</b> 200+ EV charging оператори</li><li><b>Пазари:</b> 70+ на 6 континента</li><li><b>Зарядни точки:</b> 300 000+</li><li><b>Зарядни сесии през 2025:</b> 28,4 млн.</li><li><b>Присъствие:</b> София, Лондон, Париж, Арнем, Вашингтон, Куала Лумпур</li></ul></section>
+<section class="card"><h2>⚡ Какво е AMPECO?</h2><ul><li>Софтуерна компания, фокусирана изцяло върху <b>EV charging</b>.</li><li>Не произвежда зарядни станции.</li><li>Не притежава собствена зарядна мрежа.</li><li>Не продава електроенергия.</li><li>Предоставя software backend/infrastructure за управление на charging бизнес.</li></ul></section>
+<section class="card"><h2>💻 Тип платформа</h2><ul><li><b>EV Charging Management Platform / CPMS</b></li><li><b>White-label</b> — клиентът използва собствен бранд.</li><li><b>Hardware-agnostic</b> — работи с различни производители.</li><li>Cloud базирана, API-driven и extensible.</li><li>Отворени индустриални стандарти.</li><li>Позиционирана като <b>AI-native</b>.</li></ul></section>
+<section class="card"><h2>🔧 Какво управлява?</h2><span class="tag">Charge points</span><span class="tag">Charging sessions</span><span class="tag">Users</span><span class="tag">Tariffs</span><span class="tag">Payments</span><span class="tag">Billing</span><span class="tag">Roaming</span><span class="tag">Energy management</span><span class="tag">Monitoring</span><span class="tag">Maintenance</span><span class="tag">Analytics</span><span class="tag">Integrations</span></section>
+<section class="card"><h2>👥 Типове клиенти</h2><ul><li><b>CPO — Charge Point Operator:</b> оператор на зарядна инфраструктура.</li><li><b>eMSP — eMobility Service Provider:</b> charging услуги за EV шофьори.</li><li>Fleet operators, energy utilities, OEM/автомобилни производители.</li><li>Parking operators, site hosts, retail/hospitality, oil & gas.</li></ul></section>
+<section class="card"><h2>🌍 Географско покритие</h2><ul><li><b>70+ пазара / 6 континента</b></li><li>Европа</li><li>Северна Америка</li><li>APAC / Азиатско-тихоокеански регион</li><li>Фокус върху мащабируеми глобални EV charging операции.</li></ul></section>
+<section class="card"><h2>🔌 OCPP</h2><p><b>Open Charge Point Protocol</b> — комуникация между физическата зарядна станция и CSMS/backend.</p><code>EV Charger ↔ OCPP ↔ AMPECO / CSMS Backend</code><ul><li>Статус на charger</li><li>Start/stop на сесии</li><li>Авторизация</li><li>Транзакции</li><li><b>MeterValues</b></li><li>Remote commands и диагностика</li></ul></section>
+<section class="card"><h2>🔗 OCPI</h2><p><b>Open Charge Point Interface</b> — обмен между различни участници/платформи в charging екосистемата.</p><code>CPO ↔ OCPI ↔ eMSP / Roaming Partner</code><ul><li>Локации и зарядни точки</li><li>Тарифи</li><li>Charging sessions</li><li>CDR — Charge Detail Records</li><li>Tokens/authorization</li><li>Roaming</li></ul></section>
+<section class="card hero"><h2>🧠 OCPP vs OCPI — запомни това</h2><div class="big">OCPP = Зарядна станция ↔ Backend<br>OCPI = Backend/оператор ↔ Друг backend/оператор</div></section>
+<section class="card"><h2>🔋 Други стандарти</h2><ul><li><b>ISO 15118</b> — EV ↔ charger комуникация, включително Plug & Charge.</li><li><b>OpenADR</b> — demand response / управление на енергийното натоварване.</li></ul></section>
+<section class="card"><h2>🎯 Философия</h2><ul><li>Софтуерът се адаптира към бизнеса на клиента.</li><li>Независимост от конкретен charger manufacturer.</li><li>Open standards и минимален vendor lock-in.</li><li>Клиентът контролира бранд, данни и бизнес модел.</li><li>Проектирана за големи и сложни charging networks.</li></ul></section>
+<section class="card"><h2>📈 Развитие</h2><ul><li><b>2018:</b> основаване</li><li><b>2023:</b> Series A — продуктово развитие и Европа/Северна Америка</li><li><b>2024:</b> Series B — enterprise функционалности и глобална експанзия</li><li><b>Днес:</b> independent, founder-led, venture-backed software company</li></ul></section>
+</div></section>
+<section id="ocpp" class="page">
+<div class="grid">
+<section class="card hero"><div class="kicker">OCPP Handbook 2026 — condensed</div><h2>⚡ OCPP в 20 секунди</h2>
+<div class="big">OCPP е отвореният, manufacturer-neutral протокол, чрез който зарядната станция комуникира с CSMS/backend като AMPECO.</div>
+<div class="flow">EV → Charging Station ↔ OCPP ↔ CSMS / AMPECO Backend</div>
+<p class="note"><b>Защо съществува?</b> Interoperability и по-малък vendor lock-in: операторът може да използва зарядни от различни производители с централен backend.</p></section>
 
-* { box-sizing: border-box; }
+<section class="card"><h2>🧠 Какво трябва да запомня</h2><ul>
+<li><b>Charge Point / Charging Station = client</b></li>
+<li><b>CSMS / Central System = server/backend</b></li>
+<li>OCPP пренася status, authorization, transactions, MeterValues, remote commands, firmware/diagnostics и smart charging.</li>
+<li><b>OCPP 1.6</b> остава най-разпространената версия през 2026.</li>
+<li><b>2.0.1</b> е голям redesign с device management, по-добри transactions/security и ISO 15118.</li>
+<li><b>2.1</b> е най-новото поколение; добавя backward compatibility в 2.x линията и V2X възможности.</li>
+</ul></section>
 
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  line-height: 1.5;
-}
+<section class="card"><h2>🎯 Основни ползи</h2><ul>
+<li><b>Interoperability:</b> различни charger manufacturers ↔ различни backends.</li>
+<li><b>Remote management:</b> monitor, start/stop, configure, diagnose.</li>
+<li><b>По-добро driver experience:</b> authorization, billing, payments.</li>
+<li><b>По-ниски разходи:</b> по-малко ръчна намеса, повече operational data.</li>
+<li><b>Future-proofing:</b> отворен стандарт, който се развива.</li>
+<li><b>Smart charging:</b> динамичен контрол на power/current според grid, availability и price.</li>
+</ul></section>
 
-header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(13,17,23,.96);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border);
-  padding: 18px 24px;
-}
+<section class="card"><h2>📡 JSON vs SOAP/XML</h2>
+<div class="table-wrap"><table class="mini-table"><tr><th>JSON / WebSocket</th><th>SOAP / XML</th></tr>
+<tr><td>Лек формат; по-подходящ за real-time комуникация.</td><td>По-тежки XML messages.</td></tr>
+<tr><td>WebSocket дава двупосочна връзка; backend е server.</td><td>И двете страни често трябва да приемат incoming connections.</td></tr>
+<tr><td>По-лесна диагностика и по-малко network complexity.</td><td>NAT/firewall може да изискват допълнителна конфигурация.</td></tr>
+</table></div></section>
 
-.header-inner {
-  max-width: 1300px;
-  margin: auto;
-}
+<section class="card"><h2>🧩 OCPP речник</h2><ul>
+<li><b>Profile:</b> група функционалности/messages (особено при 1.6).</li>
+<li><b>Message:</b> единица данни между charger и CSMS.</li>
+<li><b>Data type:</b> string, integer, boolean, date-time, enum и др.</li>
+<li><b>Configuration key:</b> настройка, която влияе на charger поведението.</li>
+<li><b>Use case:</b> сценарий като start/stop/remote start transaction.</li>
+<li><b>Test case:</b> проверка дали implementation-ът се държи според стандарта.</li>
+<li><b>ChargingProfile:</b> правила за power/current във времето; съдържа ChargingSchedule.</li>
+</ul></section>
 
-h1 {
-  margin: 0 0 4px;
-  font-size: 22px;
-}
+<section class="card"><h2>🧱 OCPP 1.6 Profiles</h2>
+<span class="tag">Core</span><span class="tag">Firmware Management</span><span class="tag">Local Auth List</span><span class="tag">Remote Trigger</span><span class="tag">Reservation</span><span class="tag">Smart Charging</span>
+<p>При 1.6 функционалностите и messages са групирани в profiles; implementer-ът избира нужните според business case.</p></section>
 
-.subtitle {
-  color: var(--muted);
-  font-size: 13px;
-  margin-bottom: 14px;
-}
+<section class="card hero"><h2>🔄 Mental model: charging session</h2>
+<div class="flow">Boot / Status → Authorize → Start Transaction → MeterValues → Stop Transaction</div>
+<p><b>Support mindset:</b> намери къде по веригата очакваното message/data липсва, закъснява или е невалидно.</p></section>
 
-.search-wrap {
-  display: flex;
-  gap: 8px;
-}
+<section class="card"><h2>📟 Metering / MeterValues</h2><ul>
+<li>Charger-ът изпраща измервания към CSMS.</li>
+<li>Може да са periodic samples или clock-aligned intervals.</li>
+<li>Данните могат да включват energy, voltage/current и други измервания.</li>
+<li>Използват се за monitoring, charging session data, billing и grid/load management.</li>
+</ul><p class="note"><b>Support example:</b> „Сесията показва 0 kWh“ → провери дали charger-ът е изпратил очакваните metering data/MeterValues и как backend-ът ги е обработил.</p></section>
 
-#search {
-  width: 100%;
-  padding: 12px 14px;
-  background: var(--panel);
-  color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  outline: none;
-  font-size: 15px;
-}
-
-#search:focus {
-  border-color: var(--accent);
-}
-
-kbd {
-  background: var(--panel2);
-  border: 1px solid var(--border);
-  border-radius: 5px;
-  padding: 2px 6px;
-  color: var(--muted);
-}
-
-.filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-  margin-top: 10px;
-}
-
-.filter {
-  border: 1px solid var(--border);
-  background: var(--panel);
-  color: var(--muted);
-  padding: 5px 10px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 12px;
-}
-
-.filter:hover,
-.filter.active {
-  color: white;
-  border-color: var(--accent);
-  background: #16243a;
-}
-
-main {
-  max-width: 1300px;
-  margin: 22px auto;
-  padding: 0 24px 60px;
-}
-
-.top-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 14px;
-  margin-bottom: 24px;
-}
-
-.panel {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 18px;
-}
-
-.panel h2 {
-  margin: 0 0 12px;
-  font-size: 16px;
-}
-
-.cheat {
-  display: grid;
-  grid-template-columns: repeat(2,1fr);
-  gap: 8px;
-}
-
-.cheat-item {
-  background: var(--panel2);
-  padding: 9px 11px;
-  border-radius: 7px;
-  font-size: 13px;
-}
-
-.cheat-item strong {
-  color: var(--accent);
-}
-
-.interview strong {
-  color: var(--green);
-}
-
-.warning {
-  color: var(--yellow);
-}
-
-.section-title {
-  margin: 26px 0 12px;
-  font-size: 18px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill,minmax(310px,1fr));
-  gap: 12px;
-}
-
-.card {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  overflow: hidden;
-  transition: border-color .15s, transform .15s;
-}
-
-.card:hover {
-  border-color: #484f58;
-}
-
-.card summary {
-  cursor: pointer;
-  list-style: none;
-  padding: 15px;
-}
-
-.card summary::-webkit-details-marker {
-  display: none;
-}
-
-.card-title {
-  font-weight: 650;
-  margin-bottom: 5px;
-}
-
-.card-short {
-  color: var(--muted);
-  font-size: 13px;
-}
-
-.card-body {
-  padding: 0 15px 16px;
-  font-size: 14px;
-  border-top: 1px solid var(--border);
-  padding-top: 13px;
-}
-
-.card-body p:first-child {
-  margin-top: 0;
-}
-
-.tag {
-  display: inline-block;
-  font-size: 10px;
-  padding: 2px 6px;
-  margin-right: 4px;
-  border-radius: 4px;
-  background: #21262d;
-  color: var(--muted);
-}
-
-.flow {
-  background: #090c10;
-  border: 1px solid var(--border);
-  border-radius: 7px;
-  padding: 10px;
-  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
-  font-size: 12px;
-  white-space: pre-wrap;
-}
-
-.highlight {
-  color: var(--green);
-  font-weight: 600;
-}
-
-.question {
-  border-left: 3px solid var(--purple);
-}
-
-.insider {
-  border-left: 3px solid var(--yellow);
-}
-
-.personal {
-  border-left: 3px solid var(--green);
-}
-
-.hidden {
-  display: none !important;
-}
-
-#resultCount {
-  margin: 12px 0;
-  color: var(--muted);
-  font-size: 12px;
-}
-
-footer {
-  text-align: center;
-  color: var(--muted);
-  font-size: 11px;
-  padding: 30px;
-}
-
-@media(max-width:800px) {
-  .top-grid { grid-template-columns:1fr; }
-  .cheat { grid-template-columns:1fr; }
-  main { padding:0 12px 40px; }
-  header { padding:14px 12px; }
-}
-
-.company-summary { max-width: 760px; margin: 8px auto 30px; font-size: 14px; }
-.company-summary h2 { text-align: center; font-size: 16px; margin: 0 0 16px; }
-.summary-list { width: fit-content; max-width: 100%; margin: 0 auto; padding: 0; list-style: none; }
-.summary-list li { display: grid; grid-template-columns: 24px 1fr; gap: 8px; margin: 8px 0; }
-.source-note { text-align: center; color: var(--muted); font-size: 11px; margin-top: 16px; }
-a { color: var(--accent); overflow-wrap: anywhere; }
-.final-recap { max-width: 860px; margin: 32px auto 0; font-size: 14px; }
-.final-recap h2 { font-size: 16px; }
-.recap-intro { color: var(--muted); }
-.recap-list { padding-left: 20px; }
-.recap-list li { padding-left: 4px; margin: 14px 0; }
-</style>
-</head>
-
-<body>
-
-<header>
-<div class="header-inner">
-  <h1>⚡ AMPECO — технически справочник</h1>
-  <div class="subtitle">
-    EV зареждане • Протоколи и диагностика • Офлайн и онлайн
-  </div>
-
-  <div class="search-wrap">
-    <input id="search"
-      placeholder="Търси: AMPECO, OCPP, измервания, CPO, роуминг..."
-      autocomplete="off">
-  </div>
-
-  <div class="filters">
-    <button class="filter active" data-filter="all">Всички</button>
-    <button class="filter" data-filter="core">Основи</button>
-    <button class="filter" data-filter="protocol">Протоколи</button>
-    <button class="filter" data-filter="terminology">Терминология</button>
-    <button class="filter" data-filter="troubleshooting">Диагностика</button>
-    <button class="filter" data-filter="question">Отговори за интервю</button>
-  </div>
-
-  <div style="margin-top:8px;font-size:11px;color:var(--muted)">
-    <kbd>/</kbd> или <kbd>Ctrl/Cmd + K</kbd> търсене •
-    <kbd>Esc</kbd> изчистване
-  </div>
-</div>
-</header>
-
-<main>
-
-<section class="company-summary" aria-labelledby="company-summary-title">
-<h2 id="company-summary-title">Накратко за AMPECO:</h2>
-<ul class="summary-list">
-<li><span aria-hidden="true">📅</span><span>основана през 2018 г.</span></li>
-<li><span aria-hidden="true">💻</span><span>независима софтуерна компания</span></li>
-<li><span aria-hidden="true">⚡</span><span>разработва платформа за управление на зареждането на електромобили</span></li>
-<li><span aria-hidden="true">🏷️</span><span>може да се предлага под собствената марка на клиента (white-label)</span></li>
-<li><span aria-hidden="true">🤝</span><span>обслужва CPO, eMSP, автопаркове, енергийни компании, автомобилни производители и др.</span></li>
-<li><span aria-hidden="true">🎯</span><span>компанията се фокусира върху софтуера</span></li>
-<li><span aria-hidden="true">🔌</span><span>не притежава зарядни станции</span></li>
-<li><span aria-hidden="true">💡</span><span>не продава електроенергия</span></li>
-<li><span aria-hidden="true">🌐</span><span>не управлява собствена зарядна мрежа</span></li>
-<li><span aria-hidden="true">📊</span><span>управлява над 300 000 зарядни точки</span></li>
-<li><span aria-hidden="true">🌍</span><span>над 70 пазара</span></li>
-<li><span aria-hidden="true">🔗</span><span>поддържа отворени стандарти като OCPP и OCPI</span></li>
-<li><span aria-hidden="true">🛠️</span><span>обхваща конфигуриране на инфраструктурата, тарифи, роуминг, таксуване и анализи</span></li>
-</ul>
-<p class="source-note">Източник: <a href="https://www.ampeco.com/about/" target="_blank" rel="noopener noreferrer">AMPECO — About us</a> • Данни от 6 октомври 2026 г.</p>
+<section class="card"><h2>🧰 Functional Blocks — 2.0.1</h2>
+<span class="tag">Security</span><span class="tag">Provisioning</span><span class="tag">Authorization</span><span class="tag">Local Auth List</span><span class="tag">Transactions</span><span class="tag">Remote Control</span><span class="tag">Availability</span><span class="tag">Reservation</span><span class="tag">Tariff & Cost</span><span class="tag">Metering</span><span class="tag">Smart Charging</span><span class="tag">Firmware</span><span class="tag">ISO 15118 Certificates</span><span class="tag">Diagnostics</span><span class="tag">Display Message</span><span class="tag">Data Transfer</span>
 </section>
 
-<div class="top-grid">
+<section class="card"><h2>🎛️ Какво правят важните blocks?</h2><ul>
+<li><b>Provisioning:</b> station registration + basic configuration.</li>
+<li><b>Authorization:</b> кой има право да зарежда.</li>
+<li><b>Transactions:</b> start/stop и transaction lifecycle.</li>
+<li><b>Remote Control:</b> remote transaction, unlock connector, remote trigger.</li>
+<li><b>Availability:</b> status notifications.</li>
+<li><b>Tariff & Cost:</b> price before/during/after charging.</li>
+<li><b>Diagnostics:</b> request/upload diagnostics + monitoring data.</li>
+<li><b>Data Transfer:</b> custom/vendor extensions.</li>
+</ul></section>
 
-<div class="panel">
-<h2>⚡ Най-важното за 10 секунди</h2>
+<section class="card"><h2>⚙️ Smart Charging</h2><ul>
+<li>CSMS влияе на charging current/power.</li>
+<li>Charging Profiles задават power/current limits във времето.</li>
+<li>Може да работи на EVSE, station или site/group level.</li>
+<li>Цел: load balancing, grid protection, оптимизация на energy cost.</li>
+</ul></section>
 
-<div class="cheat">
-<div class="cheat-item"><strong>AMPECO</strong> → платформа за управление на зареждането на електромобили</div>
-<div class="cheat-item"><strong>CPO</strong> → управлява зарядни станции</div>
-<div class="cheat-item"><strong>eMSP</strong> → обслужва водачи на електромобили</div>
-<div class="cheat-item"><strong>OCPP</strong> → зарядна станция ↔ бекенд</div>
-<div class="cheat-item"><strong>OCPI</strong> → бекенд ↔ бекенд</div>
-<div class="cheat-item"><strong>MeterValues</strong> → измервания от зарядната станция</div>
-<div class="cheat-item"><strong>kW</strong> → с каква мощност</div>
-<div class="cheat-item"><strong>kWh</strong> → колко енергия</div>
-<div class="cheat-item"><strong>CDR</strong> → запис за приключила сесия</div>
-<div class="cheat-item"><strong>Роуминг (Roaming)</strong> → клиент на А използва мрежата на Б</div>
-</div>
-</div>
+<section class="card"><h2>🕰️ Версии — супер кратко</h2>
+<div class="table-wrap"><table class="mini-table">
+<tr><th>Version</th><th>Запомни</th></tr>
+<tr><td><b>1.5</b></td><td>2012; широко използван, но inconsistent implementations; OCA certification започва от 1.6.</td></tr>
+<tr><td><b>1.6</b></td><td>2015; най-разпространен; JSON + Smart Charging + Trigger messages; TLS, но без пълния security framework на 2.x.</td></tr>
+<tr><td><b>2.0</b></td><td>2018; голям redesign; почти всички messages са променени; не е backward-compatible с 1.6.</td></tr>
+<tr><td><b>2.0.1</b></td><td>Поправя/изяснява 2.0; Device Management, unified transactions, enhanced security, ISO 15118, richer smart charging.</td></tr>
+<tr><td><b>2.1</b></td><td>2025; ново поколение с V2X и backward compatibility в 2.x линията.</td></tr>
+</table></div></section>
 
+<section class="card"><h2>🚀 2.0.1 — какво е голямото</h2><ul>
+<li><b>Device Management:</b> по-дълбока видимост и управление на сложни multi-vendor networks.</li>
+<li><b>Transactions:</b> по-унифицирано reporting.</li>
+<li><b>Security:</b> TLS, certificates, secure firmware, security events/logging.</li>
+<li><b>Smart Charging:</b> EV може да комуникира необходимата energy.</li>
+<li><b>ISO 15118:</b> Plug & Charge + по-богата EV↔EVSE комуникация.</li>
+<li><b>Display messages:</b> tariff/running/final cost и driver-facing messaging.</li>
+</ul></section>
 
-</div>
+<section class="card"><h2>🔌 Съседни протоколи</h2><ul>
+<li><b>ISO 15118:</b> EV ↔ charger; Plug & Charge и V2G/V2X capabilities.</li>
+<li><b>OpenADR:</b> utility/grid → demand-response signals → CSMS може да коригира charging behavior.</li>
+<li><b>OCPI:</b> backend/operator ↔ друг backend/operator; roaming ecosystem.</li>
+<li><b>OSCP:</b> charging management systems ↔ smart charging/grid services; по-високо ниво от charger operations.</li>
+</ul></section>
 
-<div id="resultCount"></div>
+<section class="card"><h2>🛡️ Security</h2><ul>
+<li>1.6 може да използва TLS, но често се допълва с VPN/private networks/IPsec.</li>
+<li>2.0.1 добавя по-цялостен security model: certificates, secure firmware, security logs/events и TLS profiles.</li>
+<li>Certification/testing има значение: „поддържа OCPP“ не означава автоматично качествен implementation.</li>
+</ul></section>
 
-<h2 class="section-title">Библиотека със справочни карти</h2>
+<section class="card"><h2>🧪 Hardware interoperability</h2><ul>
+<li>Качеството на charger firmware/OCPP implementation директно влияе на reliability.</li>
+<li>Лош implementation → partial functionality, weird edge cases, unreliable communication.</li>
+<li>Тестват се remote start/stop, firmware updates, smart charging и други core/advanced scenarios.</li>
+<li>AMPECO работи с hardware manufacturers за подобряване на interoperability.</li>
+</ul></section>
 
-<div class="grid" id="cards">
+<section class="card"><h2>🌍 Regulations — защо OCPP помага</h2><ul>
+<li><b>UK smart charging:</b> off-peak behavior, randomized delays, user override, secure communication; OCPP може да подпомогне compliance.</li>
+<li><b>German Eichrecht:</b> точен kWh metering и проверими billing data; OCPP пренася metered data към CSMS.</li>
+</ul></section>
 
-<!-- AMPECO -->
+<section class="card"><h2>🧪 Testing & evolution</h2><ul>
+<li><b>OCTT2:</b> compliance testing за OCPP 2.0.1.</li>
+<li><b>Certification:</b> доказва conformity към официалните specifications.</li>
+<li><b>Plugfests:</b> vendors тестват interoperability помежду си.</li>
+<li>Protocol-ът се развива чрез industry working groups.</li>
+</ul></section>
 
-<details class="card" data-category="core"
-data-search="за компанията основана 2018 white label about ampeco company product platform ev charging backend csms AMPECO — What is it? Software/backend platform for EV charging businesses. AMPECO provides the software layer used to manage EV charging infrastructure and charging businesses. It can manage: chargers charging sessions users tariffs payments roaming monitoring remote operations reporting APIs Physical Charger │ OCPP ▼ AMPECO │ OCPI ▼ Other charging providers">
-<summary>
-<div class="card-title">AMPECO — за компанията и платформата</div>
-<div class="card-short">Софтуерна/бекенд платформа за компании в сферата на зареждането на електромобили.</div>
-</summary>
-<div class="card-body">
+<section class="card"><h2>⚠️ Implementation reality</h2><ul>
+<li>OCPP е труден за правилно implement-ване.</li>
+<li>Документацията сама по себе си дава protocol basics, не цял charging business.</li>
+<li>Различните versions не са автоматично взаимозаменяеми; migration може да изисква firmware/hardware/software changes.</li>
+<li>Business cases, local regulation и hardware quirks правят реалната среда по-сложна от спецификацията.</li>
+</ul></section>
 
-<p>AMPECO предоставя софтуерния слой за управление на зарядната инфраструктура и бизнеса около зареждането на електромобили.</p>
-
-<p>Може да управлява:</p>
-
+<section class="card hero"><h2>🎧 Support cheat sheet</h2>
+<div class="big">Когато нещо се счупи, мисли по веригата:</div>
+<div class="flow">Charger state → Connectivity → OCPP message → Payload/data → CSMS processing → Business logic</div>
 <ul>
-<li>зарядни станции</li>
-<li>зарядни сесии</li>
-<li>потребители</li>
-<li>тарифи</li>
-<li>плащания</li>
-<li>роуминг</li>
-<li>мониторинг</li>
-<li>дистанционни операции</li>
-<li>отчети</li>
-<li>APIs</li>
-</ul>
-
-<div class="flow">Физическа зарядна станция
-       │
-      OCPP
-       ▼
-     AMPECO
-       │
-      OCPI
-       ▼
-Други доставчици на зарядни услуги</div>
-
-</div>
-</details>
-
-
-<!-- CPO -->
-
-<details class="card" data-category="terminology core"
-data-search="cpo charge point operator chargers infrastructure CPO — Charge Point Operator The company operating the charging infrastructure. Remember: “We operate the chargers.” A CPO may operate thousands of chargers from multiple manufacturers. Needs: charger status fault monitoring remote operations firmware/configuration sessions meter readings pricing maintenance">
-<summary>
-<div class="card-title">CPO — оператор на зарядни станции (Charge Point Operator)</div>
-<div class="card-short">Компанията, която управлява зарядната инфраструктура.</div>
-</summary>
-
-<div class="card-body">
-
-<p><strong>Запомни:</strong> „Ние управляваме зарядните станции.“</p>
-
-<p>Един CPO може да управлява хиляди зарядни станции от различни производители.</p>
-
-<p>Нуждае се от:</p>
-
-<ul>
-<li>състояние на зарядните станции</li>
-<li>наблюдение на неизправности</li>
-<li>дистанционни операции</li>
-<li>фърмуер/конфигурация</li>
-<li>сесии</li>
-<li>показания на измервателните уреди</li>
-<li>ценообразуване</li>
-<li>поддръжка</li>
-</ul>
-
-</div>
-</details>
-
-
-<!-- EMSP -->
-
-<details class="card" data-category="terminology core"
-data-search="emsp mobility service provider driver app rfid customer eMSP — eMobility Service Provider Provides charging services directly to EV drivers. Remember: “The EV driver is our customer.” Typically provides: mobile app account RFID card payment method charging history invoices The eMSP does not necessarily own the charger.">
-<summary>
-<div class="card-title">eMSP — доставчик на услуги за електромобилност (eMobility Service Provider)</div>
-<div class="card-short">Предоставя услуги за зареждане директно на водачите на електромобили.</div>
-</summary>
-
-<div class="card-body">
-
-<p><strong>Запомни:</strong> „Водачът на електромобила е нашият клиент.“</p>
-
-<p>Обикновено предоставя:</p>
-
-<ul>
-<li>мобилно приложение</li>
-<li>потребителски профил</li>
-<li>RFID карта</li>
-<li>начин на плащане</li>
-<li>история на зарежданията</li>
-<li>фактури</li>
-</ul>
-
-<p>eMSP <strong>не е задължително да притежава зарядната станция.</strong></p>
-
-</div>
-</details>
-
-
-<!-- Fleet -->
-
-<details class="card" data-category="terminology"
-data-search="fleet vehicles vans taxis corporate ev charging Fleet Company managing many EVs and their charging. Example: 300 electric delivery vans. Needs to manage: vehicle charging charging schedules energy use costs charger availability load management You don't necessarily want 300 vans charging at maximum power simultaneously.">
-<summary>
-<div class="card-title">Автопарк (Fleet)</div>
-<div class="card-short">Компания, която управлява множество електромобили и тяхното зареждане.</div>
-</summary>
-
-<div class="card-body">
-
-<p>Пример: 300 електрически вана за доставки.</p>
-
-<p>Трябва да управлява:</p>
-
-<ul>
-<li>зареждането на превозните средства</li>
-<li>графиците за зареждане</li>
-<li>потреблението на енергия</li>
-<li>разходите</li>
-<li>наличността на зарядни станции</li>
-<li>управлението на натоварването</li>
-</ul>
-
-<p>Не е желателно 300 вана да се зареждат едновременно на максимална мощност.</p>
-
-</div>
-</details>
-
-
-<!-- Utilities -->
-
-<details class="card" data-category="terminology"
-data-search="utility electricity grid power energy Utilities Electricity/energy companies participating in EV charging. Interested in: electricity demand grid load peak consumption smart charging tariffs energy management">
-<summary>
-<div class="card-title">Енергийни компании (Utilities)</div>
-<div class="card-short">Електроенергийни/енергийни компании, които участват в зареждането на електромобили.</div>
-</summary>
-
-<div class="card-body">
-
-<p>Интересуват се от:</p>
-
-<ul>
-<li>търсенето на електроенергия</li>
-<li>натоварването на електрическата мрежа</li>
-<li>пиковото потребление</li>
-<li>интелигентното зареждане</li>
-<li>тарифи</li>
-<li>управлението на енергията</li>
-</ul>
-
-</div>
-</details>
-
-
-<!-- Automotive -->
-
-<details class="card" data-category="terminology"
-data-search="automotive manufacturers cars bmw vw mercedes charging Automotive Companies Car manufacturers integrating charging into their EV ecosystem. A manufacturer's app could allow drivers to: find chargers start charging pay see charging history use multiple charging networks They don't necessarily need to build the entire charging backend themselves.">
-<summary>
-<div class="card-title">Автомобилни компании</div>
-<div class="card-short">Автомобилни производители, които интегрират зареждането в своята екосистема за електромобили.</div>
-</summary>
-
-<div class="card-body">
-
-<p>Приложението на производителя може да позволява на водачите да:</p>
-
-<ul>
-<li>намират зарядни станции</li>
-<li>започват зареждане</li>
-<li>плащат</li>
-<li>преглеждат историята на зарежданията</li>
-<li>използват различни зарядни мрежи</li>
-</ul>
-
-<p>Не е необходимо сами да изграждат целия бекенд за зареждане.</p>
-
-</div>
-</details>
-
-
-<!-- OCPP -->
-
-<details class="card" data-category="protocol core"
-data-search="ocpp open charge point protocol charger backend csms OCPP Charger ↔ charging-management backend. Open Charge Point Protocol. CHARGER ◄──── OCPP ────► AMPECO Charger can report: online / offline availability authentication session start/stop meter values faults Backend can send remote commands and configuration. Memory rule: OCPP = physical charger ↔ backend.">
-<summary>
-<div class="card-title">OCPP</div>
-<div class="card-short">Зарядна станция ↔ бекенд за управление на зареждането.</div>
-</summary>
-
-<div class="card-body">
-
-<p><strong>Open Charge Point Protocol.</strong></p>
-
-<div class="flow">ЗАРЯДНА СТАНЦИЯ ◄──── OCPP ────► AMPECO</div>
-
-<p>Зарядната станция може да съобщава:</p>
-
-<ul>
-<li>онлайн / офлайн</li>
-<li>наличност за зареждане</li>
-<li>удостоверяване на самоличност</li>
-<li>начало/край на сесията</li>
-<li>измерени стойности</li>
-<li>неизправности</li>
-</ul>
-
-<p>Бекендът може да изпраща дистанционни команди и конфигурация.</p>
-
-<p><strong>Правило за запомняне:</strong> OCPP = физическа зарядна станция ↔ бекенд.</p>
-
-</div>
-</details>
-
-
-<!-- MeterValues -->
-
-<details class="card" data-category="protocol troubleshooting core"
-data-search="meter meterValues energy power current voltage temperature soc charging MeterValues Measurements reported by the charger during charging. 10:32 Energy: 12.4 kWh Power: 7.1 kW Current: 31 A Voltage: 230 V │ │ OCPP ▼ AMPECO Can include: energy power current voltage frequency temperature state of charge timestamp/context">
-<summary>
-<div class="card-title">MeterValues</div>
-<div class="card-short">Измервания, изпращани от зарядната станция по време на зареждане.</div>
-</summary>
-
-<div class="card-body">
-
-<div class="flow">10:32
-Енергия:     12.4 kWh
-Мощност:      7.1 kW
-Ток:           31 A
-Напрежение:   230 V
-      │
-      │ OCPP
-      ▼
-    AMPECO</div>
-
-<p>Може да включва:</p>
-
-<ul>
-<li>енергия</li>
-<li>мощност</li>
-<li>електрически ток</li>
-<li>напрежение</li>
-<li>честота</li>
-<li>температура</li>
-<li>степен на заряд на батерията (SoC)</li>
-<li>времеви маркер/контекст</li>
-</ul>
-
-</div>
-</details>
-
-
-<!-- kW -->
-
-<details class="card" data-category="terminology core"
-data-search="kw kwh power energy difference kW vs kWh kW = rate. kWh = amount consumed. kW = how fast you're charging. kWh = how much energy you've consumed. 10 kW × 2 hours ≈ 20 kWh">
-<summary>
-<div class="card-title">kW и kWh — разлика</div>
-<div class="card-short">kW = мощност. kWh = количество изразходвана енергия.</div>
-</summary>
-
-<div class="card-body">
-
-<p><strong>kW</strong> = с каква мощност зареждаш.</p>
-
-<p><strong>kWh</strong> = колко енергия си изразходвал.</p>
-
-<div class="flow">10 kW × 2 часа ≈ 20 kWh</div>
-
-</div>
-</details>
-
-
-<!-- Troubleshooting -->
-
-<details class="card" data-category="troubleshooting"
-data-search="zero kwh troubleshooting meter values bug investigate session Troubleshooting: Session Shows 0 kWh Follow the data before assuming an AMPECO bug. CHARGER ↓ OCPP ↓ MeterValues ↓ Transaction ↓ AMPECO processing ↓ UI / billing / CDR Ask: Did the charger send MeterValues? Which measurands? Correct timestamps? Correct transaction/session? Correct units? Communication interruption? Did AMPECO receive the values? Processing issue? Display-only issue? Follow the data and find where reality diverges from expected behaviour.">
-<summary>
-<div class="card-title">Диагностика: сесията показва 0 kWh</div>
-<div class="card-short">Проследи данните, преди да приемеш, че има дефект в AMPECO.</div>
-</summary>
-
-<div class="card-body">
-
-<div class="flow">ЗАРЯДНА СТАНЦИЯ
-   ↓
-OCPP
-   ↓
-MeterValues
-   ↓
-Транзакция
-   ↓
-Обработка в AMPECO
-   ↓
-Интерфейс / таксуване / CDR</div>
-
-<p>Провери:</p>
-
-<ul>
-<li>Изпратила ли е станцията MeterValues?</li>
-<li>Кои величини са измерени?</li>
-<li>Правилни ли са времевите маркери?</li>
-<li>Свързани ли са с правилната транзакция/сесия?</li>
-<li>Правилни ли са мерните единици?</li>
-<li>Имало ли е прекъсване на комуникацията?</li>
-<li>Получила ли е AMPECO стойностите?</li>
-<li>Има ли проблем при обработката?</li>
-<li>Проблемът само във визуализацията ли е?</li>
-</ul>
-
-<p class="highlight">Проследи данните и открий къде реалното поведение се разминава с очакваното.</p>
-
-</div>
-</details>
-
-
-<!-- OCPI -->
-
-<details class="card" data-category="protocol core"
-data-search="ocpi open charge point interface backend provider roaming OCPI Charging backend ↔ another provider/backend. Open Charge Point Interface. CHARGER │ OCPP ▼ AMPECO / CPO │ OCPI ▼ eMSP / OTHER PROVIDER Can exchange: locations charger status tariffs authentication/tokens remote start/stop sessions CDRs Memory rule: OCPI = backend ↔ backend.">
-<summary>
-<div class="card-title">OCPI</div>
-<div class="card-short">Бекенд за зареждане ↔ друг доставчик/бекенд.</div>
-</summary>
-
-<div class="card-body">
-
-<p><strong>Open Charge Point Interface.</strong></p>
-
-<div class="flow">ЗАРЯДНА СТАНЦИЯ
-   │
- OCPP
-   ▼
-AMPECO / CPO
-   │
- OCPI
-   ▼
-eMSP / ДРУГ ДОСТАВЧИК</div>
-
-<p>Може да обменя:</p>
-
-<ul>
-<li>локации</li>
-<li>състояние на зарядните станции</li>
-<li>тарифи</li>
-<li>удостоверяване/токени</li>
-<li>дистанционно стартиране/спиране</li>
-<li>сесии</li>
-<li>CDRs</li>
-</ul>
-
-<p><strong>Правило за запомняне:</strong> OCPI = бекенд ↔ бекенд.</p>
-
-</div>
-</details>
-
-
-<!-- Roaming -->
-
-<details class="card" data-category="core terminology"
-data-search="roaming network customer operator emsp cpo EV Roaming Customer of A uses charging infrastructure operated by B. Similar conceptually to mobile roaming. Customer of eMSP A │ ▼ Charger operated by CPO B │ OCPI ▼ Systems exchange authorization, tariff and charging information">
-<summary>
-<div class="card-title">Роуминг при зареждане на електромобили</div>
-<div class="card-short">Клиент на А използва зарядна инфраструктура, управлявана от Б.</div>
-</summary>
-
-<div class="card-body">
-
-<p>Концепцията е сходна с мобилния роуминг.</p>
-
-<div class="flow">Клиент на eMSP А
-       │
-       ▼
-Станция, управлявана от CPO Б
-       │
-      OCPI
-       ▼
-Системите обменят информация за
-оторизация, тарифи и зареждане</div>
-
-</div>
-</details>
-
-
-<!-- CDR -->
-
-<details class="card" data-category="terminology"
-data-search="cdr charge detail record billing session CDR — Charge Detail Record Record describing a completed charging session. Driver: XYZ Charger: ABC Start: 14:03 Finish: 14:51 Energy: 31.7 kWh Tariff: ... Cost: ... Used for billing, invoicing, roaming and reconciliation.">
-<summary>
-<div class="card-title">CDR — подробен запис за зареждането (Charge Detail Record)</div>
-<div class="card-short">Запис, който описва приключила зарядна сесия.</div>
-</summary>
-
-<div class="card-body">
-
-<div class="flow">Водач:     XYZ
-Станция:   ABC
-Начало:    14:03
-Край:      14:51
-Енергия:   31.7 kWh
-Тарифа:    ...
-Цена:      ...</div>
-
-<p>Използва се за таксуване, фактуриране, роуминг и сверяване на отчетите.</p>
-
-</div>
-</details>
-
-
-<!-- Flow -->
-
-<details class="card" data-category="core"
-data-search="charging session flow driver rfid app charger End-to-End Charging Flow The complete mental model. EV DRIVER ↓ RFID / APP ↓ CHARGER ↓ OCPP AMPECO ↓ Authorization ↓ Session starts ↓ EV charges ↓ MeterValues ↓ Energy recorded ↓ Session finishes ↓ Tariff / CDR / Billing If roaming: AMPECO / CPO ↓ OCPI eMSP / Partner">
-<summary>
-<div class="card-title">Целият процес на зареждане</div>
-<div class="card-short">Цялостната схема на процеса.</div>
-</summary>
-
-<div class="card-body">
-
-<div class="flow">ВОДАЧ НА ЕЛЕКТРОМОБИЛ
-    ↓
-RFID / ПРИЛОЖЕНИЕ
-    ↓
-ЗАРЯДНА СТАНЦИЯ
-    ↓ OCPP
-AMPECO
-    ↓
-Оторизация
-    ↓
-Начало на сесията
-    ↓
-Електромобилът се зарежда
-    ↓
-MeterValues
-    ↓
-Записване на енергията
-    ↓
-Край на сесията
-    ↓
-Тарифа / CDR / Таксуване
-
-При роуминг:
-
-AMPECO / CPO
-    ↓ OCPI
-eMSP / Партньор</div>
-
-</div>
-</details>
-
-
-<!-- OCPP vs OCPI -->
-
-<details class="card question" data-category="question"
-data-search="difference ocpp ocpi interview Q: OCPP vs OCPI? Very likely easy technical question. OCPP handles communication between the physical charging station and the charging-management backend. OCPI handles communication between charging-service providers/backends, particularly for interoperability and roaming. CHARGER ↓ OCPP AMPECO ↓ OCPI OTHER PROVIDER">
-<summary>
-<div class="card-title">Въпрос: Каква е разликата между OCPP и OCPI?</div>
-<div class="card-short">Вероятен базов технически въпрос.</div>
-</summary>
-
-<div class="card-body">
-
-<p>
-<strong>OCPP</strong> осигурява комуникацията между физическата зарядна станция и бекенда за управление на зареждането.
-</p>
-
-<p>
-<strong>OCPI</strong> осигурява комуникацията между доставчици на зарядни услуги/бекенд системи, особено за оперативна съвместимост и роуминг.
-</p>
-
-<div class="flow">ЗАРЯДНА СТАНЦИЯ
-   ↓ OCPP
-AMPECO
-   ↓ OCPI
-ДРУГ ДОСТАВЧИК</div>
-
-</div>
-</details>
-
-
-<!-- CPO vs eMSP -->
-
-<details class="card question" data-category="question"
-data-search="difference cpo emsp interview Q: CPO vs eMSP? Infrastructure operator vs driver-facing provider. CPO: operates the charging infrastructure. eMSP: provides charging services to the EV driver. A company can perform both roles.">
-<summary>
-<div class="card-title">Въпрос: Каква е разликата между CPO и eMSP?</div>
-<div class="card-short">Оператор на инфраструктурата и доставчик на услуги за водачите.</div>
-</summary>
-
-<div class="card-body">
-
-<p>
-<strong>CPO:</strong> управлява зарядната инфраструктура.
-</p>
-
-<p>
-<strong>eMSP:</strong> предоставя услуги за зареждане на водача на електромобила.
-</p>
-
-<p>
-Една компания може да изпълнява и двете роли.
-</p>
-
-</div>
-</details>
-
-
-</div>
-
-<section class="panel final-recap" aria-labelledby="recap-title">
-<h2 id="recap-title">Петте неща, които трябва да останат в главата ти</h2>
-<p class="recap-intro">Дори да те събудят в 3 сутринта:</p>
-<ul class="recap-list">
-<li><strong>AMPECO</strong> → софтуерна платформа за управление на бизнеса със зареждане на електромобили.</li>
-<li><strong>OCPP</strong> → <strong>зарядна станция ↔ AMPECO/бекенд.</strong> <a href="https://openchargealliance.org/protocols/open-charge-point-protocol/" target="_blank" rel="noopener noreferrer">Open Charge Alliance</a></li>
-<li><strong>MeterValues</strong> → измервания от зарядната станция: енергия, мощност, ток, напрежение и др. <a href="https://app.unpkg.com/%40ampeco/ocpp-eliftech%401.0.3/files/ocpp-1.6-schemas/MeterValues.json" target="_blank" rel="noopener noreferrer">UNPKG — схема на MeterValues</a></li>
-<li><strong>OCPI</strong> → <strong>бекенд/доставчик на зарядни услуги ↔ друг доставчик/бекенд</strong>, особено при роуминг. <a href="https://evroaming.org/ocpi/" target="_blank" rel="noopener noreferrer">EVRoaming Foundation</a></li>
-<li><strong>CPO и eMSP</strong> → <strong>CPO управлява зарядните станции; eMSP обслужва водачите.</strong> <a href="https://developers.ampeco.com/docs/overview" target="_blank" rel="noopener noreferrer">AMPECO EV Charging Platform</a></li>
-</ul>
-<p>Това е основата. Когато тези пет неща станат интуитивни, можем да навлезем <strong>едно ниво по-дълбоко в диагностиката на OCPP</strong> — според мен най-полезната следваща стъпка за интервюто за инженер техническа поддръжка.</p>
-</section>
-
-</main>
-
-<footer>
-AMPECO — технически справочник • Локално / Офлайн
-</footer>
-
-
+<li><b>Charger offline?</b> connectivity, WebSocket/TLS, configuration, station status.</li>
+<li><b>Не стартира?</b> authorization, transaction messages, connector availability.</li>
+<li><b>0 kWh / грешна energy?</b> MeterValues/metering + backend processing.</li>
+<li><b>Remote command fails?</b> station connectivity + supported profile/functionality + response.</li>
+<li><b>Само конкретен model прави проблем?</b> подозирай charger-specific OCPP implementation/firmware.</li>
+</ul></section>
+
+<section class="card"><h2>🧠 Interview-ready one-liners</h2><ul>
+<li><b>OCPP:</b> „Стандартизира комуникацията между charger-а и CSMS/backend-а.“</li>
+<li><b>Главната полза:</b> „Interoperability и избягване на vendor lock-in.“</li>
+<li><b>1.6 vs 2.0.1:</b> „2.0.1 е redesign с по-добър device management, transaction model, security и ISO 15118 support.“</li>
+<li><b>MeterValues:</b> „Metering data от charging station към backend по време/около charging session.“</li>
+<li><b>Support:</b> „Бих проверил expected message flow и бих локализирал дали проблемът е connectivity, charger implementation, payload/configuration или backend processing.“</li>
+</ul></section>
+</div></section>
+<section id="glossary" class="page"><div class="grid"><section class="card hero"><h2>📚 EV Charging Glossary</h2><div class="big">Бърза справка за протоколи, роли, измервания, API и диагностика.</div><p>Използвай търсачката горе — всички термини в този раздел се индексират автоматично.</p></section><section class="card"><h2>Протоколи и комуникация</h2><div class="table-wrap"><table class="mini-table"><tr><th>Термин</th><th>Разшифровка</th><th>Накратко</th></tr><tr><td><b>OCPP</b></td><td>Open Charge Point Protocol</td><td>Зарядна станция ↔ CSMS/backend (AMPECO).</td></tr><tr><td><b>OCPI</b></td><td>Open Charge Point Interface</td><td>CPO ↔ eMSP; обмен на данни и roaming.</td></tr><tr><td><b>OICP</b></td><td>Open InterCharge Protocol</td><td>Протокол за roaming в екосистемата на Hubject.</td></tr><tr><td><b>OpenADR</b></td><td>Open Automated Demand Response</td><td>Стандартизирани сигнали за управление на енергийното потребление.</td></tr><tr><td><b>HTTP / HTTPS</b></td><td>Hypertext Transfer Protocol (Secure)</td><td>Уеб/API комуникация; HTTPS е защитена.</td></tr><tr><td><b>REST API</b></td><td>Representational State Transfer</td><td>Интерфейс за интеграция между софтуерни системи.</td></tr><tr><td><b>WS / WSS</b></td><td>WebSocket / WebSocket Secure</td><td>Постоянна двупосочна връзка; OCPP-J използва WebSocket.</td></tr><tr><td><b>JSON</b></td><td>JavaScript Object Notation</td><td>Формат за структурирани данни.</td></tr><tr><td><b>Webhook</b></td><td>HTTP callback</td><td>Събитие задейства известие към външна система.</td></tr></table></div></section><section class="card"><h2>Участници и системи</h2><div class="table-wrap"><table class="mini-table"><tr><th>Термин</th><th>Разшифровка</th><th>Накратко</th></tr><tr><td><b>CPO</b></td><td>Charge Point Operator</td><td>Оператор на зарядната инфраструктура.</td></tr><tr><td><b>eMSP</b></td><td>eMobility Service Provider</td><td>Предоставя услуга за зареждане на EV шофьори.</td></tr><tr><td><b>CSMS</b></td><td>Charging Station Management System</td><td>Централна система за управление на станции.</td></tr><tr><td><b>CPMS</b></td><td>Charge Point Management System</td><td>Платформа за управление на зарядни точки.</td></tr><tr><td><b>EVSE</b></td><td>Electric Vehicle Supply Equipment</td><td>Зарядно оборудване; значението за отделна зарядна точка зависи от контекста.</td></tr><tr><td><b>EV</b></td><td>Electric Vehicle</td><td>Електрическо превозно средство.</td></tr><tr><td><b>BEV</b></td><td>Battery Electric Vehicle</td><td>Изцяло електрическо превозно средство.</td></tr><tr><td><b>PHEV</b></td><td>Plug-in Hybrid Electric Vehicle</td><td>Plug-in хибрид.</td></tr><tr><td><b>OEM</b></td><td>Original Equipment Manufacturer</td><td>Производител на оборудване или автомобили.</td></tr><tr><td><b>Roaming Hub</b></td><td>—</td><td>Свързва CPO и eMSP мрежи.</td></tr><tr><td><b>Utility</b></td><td>—</td><td>Енергийна/електроразпределителна компания.</td></tr><tr><td><b>Fleet</b></td><td>—</td><td>Автопарк от много служебни електромобили.</td></tr></table></div></section><section class="card"><h2>Сесии и измервания</h2><div class="table-wrap"><table class="mini-table"><tr><th>Термин</th><th>Разшифровка</th><th>Накратко</th></tr><tr><td><b>MeterValues</b></td><td>OCPP 1.6 message</td><td>Съобщение с измервания от зарядната станция.</td></tr><tr><td><b>Transaction</b></td><td>—</td><td>Зареждане, проследявано от протокола.</td></tr><tr><td><b>Measurand</b></td><td>—</td><td>Вид измерване: energy, power, voltage и др.</td></tr><tr><td><b>SoC</b></td><td>State of Charge</td><td>Процент заряд на батерията.</td></tr><tr><td><b>kW</b></td><td>Kilowatt</td><td>Мощност: колко бързо зарежда.</td></tr><tr><td><b>kWh</b></td><td>Kilowatt-hour</td><td>Енергия: колко е заредено.</td></tr><tr><td><b>A</b></td><td>Ampere</td><td>Електрически ток.</td></tr><tr><td><b>V</b></td><td>Volt</td><td>Напрежение.</td></tr><tr><td><b>AC</b></td><td>Alternating Current</td><td>Променлив ток; често за по-бавно зареждане.</td></tr><tr><td><b>DC</b></td><td>Direct Current</td><td>Постоянен ток; често за бързо зареждане.</td></tr><tr><td><b>CDR</b></td><td>Charge Detail Record</td><td>Запис за завършена charging сесия; billing/roaming.</td></tr><tr><td><b>RFID</b></td><td>Radio-Frequency Identification</td><td>Карта/таг за идентификация.</td></tr><tr><td><b>Tariff</b></td><td>—</td><td>Правила за цена на зареждането.</td></tr><tr><td><b>Smart Charging</b></td><td>—</td><td>Управление на мощността според ограничения.</td></tr><tr><td><b>Load Balancing</b></td><td>—</td><td>Разпределяне на наличната електрическа мощност.</td></tr></table></div></section><section class="card"><h2>Платформа и интеграции</h2><div class="table-wrap"><table class="mini-table"><tr><th>Термин</th><th>Разшифровка</th><th>Накратко</th></tr><tr><td><b>Public API</b></td><td>Application Programming Interface</td><td>Достъп до функционалности на AMPECO от други системи.</td></tr><tr><td><b>Host-to-host</b></td><td>—</td><td>Backend сървър ↔ AMPECO API; предпочитана интеграция.</td></tr><tr><td><b>Client-to-host</b></td><td>—</td><td>Приложение ↔ AMPECO API директно; по-скоро изключение.</td></tr><tr><td><b>ERP</b></td><td>Enterprise Resource Planning</td><td>Система за бизнес операции.</td></tr><tr><td><b>CRM</b></td><td>Customer Relationship Management</td><td>Система за работа с клиенти.</td></tr><tr><td><b>Back Office</b></td><td>—</td><td>Административен интерфейс.</td></tr><tr><td><b>API authentication</b></td><td>—</td><td>Проверка на достъпа до API.</td></tr><tr><td><b>Rate limit</b></td><td>—</td><td>Ограничение на броя заявки.</td></tr><tr><td><b>HTTP 200 / 401 / 404 / 500</b></td><td>Status codes</td><td>Успех / неоторизиран / не е намерено / сървърна грешка.</td></tr></table></div></section><section class="card"><h2>Хардуер и стандарти</h2><div class="table-wrap"><table class="mini-table"><tr><th>Термин</th><th>Разшифровка</th><th>Накратко</th></tr><tr><td><b>Type 2</b></td><td>—</td><td>Често срещан европейски AC конектор.</td></tr><tr><td><b>CCS / CCS2</b></td><td>Combined Charging System</td><td>Често срещан европейски DC fast-charging конектор.</td></tr><tr><td><b>CHAdeMO</b></td><td>—</td><td>Стандарт/конектор за DC зареждане.</td></tr><tr><td><b>ISO 15118</b></td><td>—</td><td>Комуникация EV ↔ charger; Plug &amp; Charge.</td></tr><tr><td><b>IEC 61851</b></td><td>—</td><td>Стандарти за проводимо EV зареждане.</td></tr><tr><td><b>OCPP 1.6J</b></td><td>—</td><td>OCPP 1.6 с JSON/WebSocket.</td></tr><tr><td><b>OCPP 2.0.1</b></td><td>—</td><td>По-ново поколение OCPP с device management/security.</td></tr><tr><td><b>OCPP 2.1</b></td><td>—</td><td>Следващо поколение OCPP с допълнителни възможности.</td></tr><tr><td><b>Firmware</b></td><td>—</td><td>Софтуерът вътре в зарядната станция.</td></tr><tr><td><b>Plug &amp; Charge</b></td><td>PnC</td><td>Автоматична идентификация при включване.</td></tr></table></div></section><section class="card"><h2>Диагностика и OCPP съобщения</h2><div class="table-wrap"><table class="mini-table"><tr><th>Термин</th><th>Разшифровка</th><th>Накратко</th></tr><tr><td><b>Heartbeat</b></td><td>OCPP</td><td>Периодично съобщение за свързаност.</td></tr><tr><td><b>BootNotification</b></td><td>OCPP</td><td>Зарядната станция се регистрира/представя на backend.</td></tr><tr><td><b>StatusNotification</b></td><td>OCPP 1.6</td><td>Съобщение за статус на конектор.</td></tr><tr><td><b>Authorize</b></td><td>OCPP</td><td>Проверка дали идентификаторът може да зарежда.</td></tr><tr><td><b>StartTransaction</b></td><td>OCPP 1.6</td><td>Начало на транзакция.</td></tr><tr><td><b>StopTransaction</b></td><td>OCPP 1.6</td><td>Край на транзакция.</td></tr><tr><td><b>TransactionEvent</b></td><td>OCPP 2.x</td><td>Събития за начало, промяна и край на транзакция.</td></tr><tr><td><b>Timeout</b></td><td>—</td><td>Не е получен очакван отговор навреме.</td></tr><tr><td><b>Payload</b></td><td>—</td><td>Съдържанието на API/protocol съобщение.</td></tr><tr><td><b>Endpoint</b></td><td>—</td><td>Адрес на услуга/API.</td></tr><tr><td><b>TLS</b></td><td>Transport Layer Security</td><td>Криптирана комуникация.</td></tr><tr><td><b>CDR mismatch</b></td><td>—</td><td>Разминаване между сесия и запис за начисляване.</td></tr></table></div></section><section class="card hero"><h2>🧠 Пет връзки за запомняне</h2><div class="flow">Charger ↔ OCPP ↔ AMPECO<br>CPO ↔ OCPI ↔ eMSP<br>CPO ↔ OICP ↔ Hubject<br>Utility ↔ OpenADR ↔ Energy Management<br>CRM / ERP ↔ REST API / Webhooks ↔ AMPECO</div><p><b>Важно:</b> OCPP 1.6 използва MeterValues, StartTransaction и StopTransaction; OCPP 2.x използва TransactionEvent за lifecycle на транзакцията.</p></section></div></section>
+<div class="footer">AMPECO quick-reference • локален single-file app</div></main>
 <script>
-const search = document.getElementById("search");
-const cards = [...document.querySelectorAll(".card")];
-const filters = [...document.querySelectorAll(".filter")];
-const count = document.getElementById("resultCount");
-
-let activeFilter = "all";
-
-function normalize(str) {
-  return str
-    .toLowerCase()
-    .replace(/[^\p{L}\p{N}\s]/gu, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-function performSearch() {
-
-  const query = normalize(search.value);
-  const words = query.split(" ").filter(Boolean);
-
-  let visible = 0;
-
-  cards.forEach(card => {
-
-    const searchable = normalize(
-      (card.dataset.search || "") + " " + card.textContent
-    );
-
-    const category = card.dataset.category || "";
-
-    const matchesText =
-      words.length === 0 ||
-      words.every(word => searchable.includes(word));
-
-    const matchesCategory =
-      activeFilter === "all" ||
-      category.split(" ").includes(activeFilter);
-
-    const show = matchesText && matchesCategory;
-
-    card.classList.toggle("hidden", !show);
-
-    if (show) {
-      visible++;
-
-      if (query.length > 1) {
-        card.open = true;
-      }
-    }
+const q=document.getElementById('q');
+function filter(){
+  const s=q.value.toLocaleLowerCase('bg');
+  document.querySelectorAll('.card').forEach(c=>{
+    c.classList.toggle('hidden',!!s&&!c.innerText.toLocaleLowerCase('bg').includes(s));
   });
-
-  count.textContent =
-    query || activeFilter !== "all"
-      ? `${visible === 1 ? "Намерена" : "Намерени"} ${visible} ${visible === 1 ? "карта" : "карти"}`
-      : `${cards.length} справочни карти`;
 }
-
-search.addEventListener("input", performSearch);
-
-filters.forEach(button => {
-
-  button.addEventListener("click", () => {
-
-    filters.forEach(b => b.classList.remove("active"));
-    button.classList.add("active");
-
-    activeFilter = button.dataset.filter;
-
-    performSearch();
-  });
-
+function clearSearch(){q.value='';filter();q.focus()}
+q.addEventListener('input',filter);
+document.addEventListener('keydown',e=>{
+  if(e.key==='/'&&document.activeElement!==q){e.preventDefault();q.focus()}
+  if(e.key==='Escape'){clearSearch();q.blur()}
 });
-
-document.addEventListener("keydown", e => {
-
-  if (
-    e.key === "/" &&
-    document.activeElement !== search
-  ) {
-    e.preventDefault();
-    search.focus();
-  }
-
-  if (
-    (e.ctrlKey || e.metaKey) &&
-    e.key.toLowerCase() === "k"
-  ) {
-    e.preventDefault();
-    search.focus();
-    search.select();
-  }
-
-  if (e.key === "Escape") {
-    search.value = "";
-    search.blur();
-    performSearch();
-  }
-
-});
-
-performSearch();
-</script>
-
-</body>
-</html>
+</script></body></html>
