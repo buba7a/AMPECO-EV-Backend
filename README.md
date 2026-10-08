@@ -1,6 +1,6 @@
 # ⚡ AMPECO EV Charging Cheat Sheet
 
-A lightweight, searchable reference app covering the AMPECO EV charging ecosystem, created as a personal learning and interview preparation tool.
+A lightweight, searchable reference app covering the AMPECO EV charging ecosystem, created as a personal learning tool.
 
 ### Features
 - 🔎 Instant search and categorized reference cards
